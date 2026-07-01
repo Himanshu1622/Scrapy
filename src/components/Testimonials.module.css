@@ -1,0 +1,147 @@
+.testimonials {
+  padding: 80px 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 48px;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.controls {
+  display: flex;
+  gap: 16px;
+}
+
+.controlBtn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.controlBtn:hover {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
+
+.slider {
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.card {
+  flex: 1;
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s;
+}
+
+.cardInactive {
+  background-color: transparent;
+  border: 1px solid var(--border-light);
+  opacity: 0.6;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.cardInactive:hover {
+  opacity: 1;
+}
+
+.cardActive {
+  background: linear-gradient(135deg, rgba(255, 87, 34, 0.1) 0%, var(--bg-card) 100%);
+  border: 1px solid var(--border-color);
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.cardActive::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 16px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 87, 34, 0.5), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: var(--border-light);
+}
+
+.avatarSmall {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--border-light);
+}
+
+.authorInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.authorInfoActive {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.authorName {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.authorRole {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.quoteIcon {
+  margin-bottom: 24px;
+}
+
+.quoteText {
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.5;
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .slider {
+    flex-direction: column;
+  }
+}

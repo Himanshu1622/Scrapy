@@ -1,0 +1,226 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 80px;
+  /* offset for navbar */
+  overflow: hidden;
+  background-color: var(--bg-dark);
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/topography.svg');
+  background-size: 600px;
+  background-position: center;
+  background-repeat: repeat;
+  opacity: 0.3;
+  z-index: 0;
+  pointer-events: none;
+}
+
+[data-theme='light'] .hero::after {
+  opacity: 0.04;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(0, 230, 118, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at center, transparent 0%, var(--bg-dark) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+[data-theme='light'] .hero::before {
+  background:
+    radial-gradient(circle at 10% 10%, rgba(0, 230, 118, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at center, transparent 0%, rgba(255, 255, 255, 0.8) 100%);
+}
+
+.glowBottom {
+  position: absolute;
+  bottom: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 50%;
+  background: radial-gradient(ellipse at bottom, rgba(0, 230, 118, 0.1) 0%, transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Network Graphic Mockup */
+.networkGraphic {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 800px;
+  height: 200px;
+  z-index: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+}
+
+.nodeLeft,
+.nodeRight {
+  width: 48px;
+  height: 48px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 0 20px rgba(0, 230, 118, 0.1);
+}
+
+.nodeCenter {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-dark) 100%);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.lineLeft,
+.lineRight {
+  position: absolute;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(0, 230, 118, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+  z-index: 1;
+}
+
+.lineLeft {
+  left: 10%;
+  right: 55%;
+}
+
+.lineRight {
+  left: 55%;
+  right: 10%;
+}
+
+.container {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 1000px;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.title {
+  font-size: 4rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.eyebrow {
+  display: inline-block;
+  padding: 6px 16px;
+  background-color: rgba(0, 230, 118, 0.1);
+  color: var(--accent-green);
+  border: 1px solid rgba(0, 230, 118, 0.2);
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+}
+
+.scrollDown {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: float 1s ease-in-out infinite;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.scrollDown:hover {
+  opacity: 1;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(12px);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding-top: 100px;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    padding: 0 12px;
+  }
+
+  .actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .actions button {
+    width: 100%;
+  }
+}
