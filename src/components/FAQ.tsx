@@ -1,64 +1,98 @@
-'use client';
-import { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
-import ScrollReveal from './ScrollReveal';
-import styles from './FAQ.module.css';
-
-const faqs = [
-  { question: "Does SCRAPY require any coding skills?", answer: "Not at all. SCRAPY is designed for non-technical users. If you can type a Google search, you can use SCRAPY." },
-  { question: "What data does SCRAPY extract from Google Maps?", answer: "Business name, address, phone number, website URL, email (where available), Google rating, number of reviews, and business category." },
-  { question: "Can I export data to Excel?", answer: "Yes. You can download a CSV file which opens directly in Microsoft Excel, Google Sheets, or any spreadsheet app." },
-  { question: "How many results can SCRAPY extract in one search?", answer: "SCRAPY can extract all available Google Maps listings for your search — typically hundreds to thousands of records depending on the keyword and location." },
-  { question: "Is SCRAPY safe to use?", answer: "Yes. SCRAPY reads publicly available data from Google Maps, the same data any user can see in their browser." },
-  { question: "Does it work for any country or city?", answer: "Yes. If a business is listed on Google Maps anywhere in the world, SCRAPY can extract it." }
-];
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { FAQ_DATA } from "../types";
 
 export default function FAQ() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  const toggleFaq = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
+  const toggleFAQ = (index: number) => {
+    setActiveIndex(activeIndex === index ? null : index);
   };
 
   return (
-    <section className={styles.faqSection} id="faq">
-      <div className={styles.container}>
-        <ScrollReveal>
-          <div className={styles.header}>
-            <div className={styles.label}>FAQ</div>
-            <h2 className={styles.title}>Got Questions? We've Got Answers.</h2>
+    <section id="faq" className="py-24 border-t border-border-color bg-bg-dark relative">
+      <div className="max-w-4xl mx-auto px-6">
+        {/* Title */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-2xl mx-auto mb-16"
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-green/10 border border-accent-green/30 text-accent-green text-xs font-semibold tracking-wider uppercase mb-4">
+            Got Questions?
           </div>
-        </ScrollReveal>
-        
-        <div className={styles.faqList}>
-          {faqs.map((faq, index) => (
-            <ScrollReveal key={index} delay={index * 0.1}>
-              <div className={`${styles.faqItem} ${openIndex === index ? styles.open : ''}`}>
-                <div 
-                  className={styles.faqHeader} 
-                  onClick={() => toggleFaq(index)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleFaq(index); } }}
+          <h2 className="font-sans text-3xl sm:text-4xl font-extrabold tracking-tight text-text-primary mb-4">
+            We've Got Answers
+          </h2>
+          <p className="font-sans text-base text-text-secondary">
+            Find immediate answers to common questions about data extraction, safety, location coverage, and formats below.
+          </p>
+        </motion.div>
+
+        {/* Accordion Lists */}
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, margin: "-50px" }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.08
+              }
+            }
+          }}
+          className="max-w-3xl mx-auto flex flex-col gap-4"
+        >
+          {FAQ_DATA.map((faq, index) => {
+            const isOpen = activeIndex === index;
+            return (
+              <motion.div
+                key={index}
+                variants={{
+                  hidden: { opacity: 0, y: 15 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } }
+                }}
+                className={`border rounded-2xl transition-all duration-300 overflow-hidden ${isOpen
+                    ? "border-accent-green bg-accent-green/5 shadow-[0_0_20px_rgba(20,184,166,0.08)]"
+                    : "border-border-color bg-bg-card/50 hover:border-border-light"
+                  }`}
+              >
+                <button
+                  onClick={() => toggleFAQ(index)}
+                  className="w-full px-6 py-5 flex justify-between items-center text-left font-sans font-bold text-sm sm:text-base text-text-primary focus:outline-none cursor-pointer"
+                  aria-expanded={isOpen}
                 >
-                  <span className={styles.question}>{faq.question}</span>
-                  <div className={styles.iconBtn}>
-                    {openIndex === index ? (
-                      <ChevronUp size={20} color="var(--accent-green)" />
-                    ) : (
-                      <ChevronDown size={20} color="var(--text-secondary)" />
-                    )}
+                  <span>{faq.question}</span>
+                  <div
+                    className={`p-1.5 rounded-lg border border-border-color bg-bg-dark text-text-secondary transition-all duration-300 flex items-center justify-center ${isOpen ? "text-accent-green border-accent-green rotate-180" : ""
+                      }`}
+                  >
+                    <ChevronDown size={16} />
                   </div>
-                </div>
-                {openIndex === index && (
-                  <div className={styles.faqAnswer}>
-                    <p>{faq.answer}</p>
-                  </div>
-                )}
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.25, ease: "easeInOut" }}
+                    >
+                      <div className="px-6 pb-6 pt-1 border-t border-border-color/40 font-sans text-xs sm:text-sm text-text-secondary leading-relaxed">
+                        {faq.answer}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
+        </motion.div>
       </div>
     </section>
   );

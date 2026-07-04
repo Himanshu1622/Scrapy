@@ -1,0 +1,6 @@
+{
+  "name": "SCRAPY",
+  "description": "Extract Business Data from Google Maps In Seconds",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
